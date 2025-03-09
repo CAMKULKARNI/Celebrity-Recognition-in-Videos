@@ -13,7 +13,7 @@ The project is organized as follows:
     *   `faceExtraction.py`: This file implements a function that takes the working directory, the name of the folder containing the images, and the name of the folder where the extracted faces will be saved as input. It detects faces in each image and saves the extracted faces as individual .jpg files in the new folder.
     *   `siamese_prediction.py`: This file implements a function that takes the paths to two images as input, reads the images, resizes them, generates face encodings using the face_recognition library, and returns the Euclidean distance between the encodings using TensorFlow.
     *   `video_processing.py`: This file implements a function that takes the working directory, the name of the folder containing the images, the name of the folder where the extracted key frames will be saved, and the desired percentage of key frames as input. It calculates the mean pixel intensity for each frame, identifies local maxima, selects a subset of frames as key frames, and saves them to the new folder.
-*   `videoToImage.py`: This file has functions to extract frames from a given video and put them in a directory given.
+    *   `videoToImage.py`: This file has functions to extract frames from a given video and put them in a directory given.
 
 ## Dependencies
 
@@ -35,7 +35,7 @@ Currently there are some issues that are being faced while installing the dlib d
 python src/runner_with_ui.py
 ```
 
-Else the project is hosted on Github and can be connected to colab and executing the given Jupyter Notebook line-by-line would give the same result.
+Currently patches are being merged to move from the [face_recognition](https://pypi.org/project/face-recognition/) module to [deepface](https://pypi.org/project/deepface/) module because of dependency conflicts and build time errors due to face_recognition module.
 
 A small demo of the project can also be seen in [Demo.mp4](Demo.mp4)
 

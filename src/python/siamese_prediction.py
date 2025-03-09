@@ -1,25 +1,28 @@
 from os import listdir, path
 
 from cv2 import IMREAD_UNCHANGED, INTER_AREA, imread, resize
-from face_recognition import face_encodings
+# from face_recognition import face_encodings
+from deepface.DeepFace import verify
 from tensorflow import reduce_sum, square, subtract
 
 
 def prediction(img1, img2):
-    dim = (200, 200)
-    img1 = imread(img1, IMREAD_UNCHANGED)
-    img1 = resize(img1, dim, interpolation=INTER_AREA)
-    img2 = imread(img2, IMREAD_UNCHANGED)
-    img2 = resize(img2, dim, interpolation=INTER_AREA)
+    # dim = (200, 200)
+    # img1 = imread(img1, IMREAD_UNCHANGED)
+    # img1 = resize(img1, dim, interpolation=INTER_AREA)
+    # img2 = imread(img2, IMREAD_UNCHANGED)
+    # img2 = resize(img2, dim, interpolation=INTER_AREA)
 
     try:
-        img1 = face_encodings(img1)[0]
-        img2 = face_encodings(img2)[0]
-        dist = reduce_sum(square(subtract(img1, img2)), -1)
+        # img1 = face_encodings(img1)[0]
+        # img2 = face_encodings(img2)[0]
+        # dist = reduce_sum(square(subtract(img1, img2)), -1)
 
-        return float(dist)
-
-    except:
+        # return float(dist)
+        result = verify(img1, img2, detector_backend="retinaface", model_name="VGG-Face")
+        return result["verified"]
+    except Exception as e:
+        print("Error in prediction: ", e)
         return None
 
 
@@ -39,8 +42,11 @@ def function(workingDirectory, imageFolderName, reference_images):
                 image1 = path.join(workingDirectory, imageFolderName, image)
                 image2 = path.join(
                     workingDirectory, reference_images, celeb, celeb_image)
-                distance = prediction(image1, image2)
-                if distance != None and distance < 0.4:
+                # distance = prediction(image1, image2)
+                # if distance != None and distance < 0.4:
+                #     count += 1
+                verfied = prediction(image1, image2)
+                if verfied:
                     count += 1
 
             if count >= 12:
